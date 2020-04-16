@@ -1,6 +1,8 @@
 import gym
 import numpy as np
 from collections import deque
+import warnings
+
 
 env=gym.make('CartPole-v1')
 
@@ -101,7 +103,7 @@ class RLAgent:
                 self.backward(action_values, experimental_values)
         self.epsilon = self.epsilon if self.epsilon < 0.01 else self.epsilon*0.997
         for layer in self.layers:
-            layer.lr = layer.lr if layer.lr < 0.0001 else layer.lr*0.995
+            layer.lr = layer.lr if layer.lr < 0.0001 else layer.lr*0.99
         
     def backward(self, calculated_values, experimental_values): 
         # values are batched = batch_size x output_size
@@ -133,5 +135,6 @@ for i_episode in range(NUM_EPISODES):
         # epsilon decay
         if done:
             # If the pole has tipped over, end this episode
-            print('Episode {} ended after {} timesteps, current exploration is {}'.format(i_episode, t+1,model.epsilon))
+            print('Episode {} ended after {} timesteps'.format(i_episode, t+1))
+            print(model.layers[0].lr)
             break
