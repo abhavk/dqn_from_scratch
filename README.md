@@ -1,1 +1,1 @@
-"# dqn_from_scratch" 
+Implementation of deep neural networks for reinforcement learning.
